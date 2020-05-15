@@ -27,8 +27,18 @@ api = tweepy.API(auth, wait_on_rate_limit=True,
 # for follower in user.followers():
 #     print(follower.name)
 
-for tweet in api.search(q="Python", lang="en", rpp=10):
-    print(f"{tweet.user.name}:{tweet.text}")
+# for tweet in api.search(q="Python", lang="en", rpp=10):
+#     print(f"{tweet.user.name}:{tweet.text}")
+
+search = "online resources"
+numberOfTweets = 20
+
+for tweet in tweepy.Cursor(api.search, search).items(numberOfTweets):
+    try:
+        tweet.retweet()
+        print('Retweeted the tweet')
+    except:
+        print('Retweet failed')
 
 try:
     api.verify_credentials()
